@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATABASE_URL = os.environ["DATABASE_URL"]
+DATABASE_URL = os.environ["postgresql://postgres:GogfbhooTAZPYbTtLzVRoITHZckmCwZO@switchback.proxy.rlwy.net:29761/railway"]
 
 conn = psycopg2.connect(DATABASE_URL)
 cursor = conn.cursor()
