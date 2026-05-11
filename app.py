@@ -13,12 +13,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATABASE_URL = os.environ["postgresql://postgres:GogfbhooTAZPYbTtLzVRoITHZckmCwZO@switchback.proxy.rlwy.net:29761/railway"]
+# ✅ 正確寫法（重點）
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 conn = psycopg2.connect(DATABASE_URL)
 cursor = conn.cursor()
 
-# 建表（含時間 + IP）
+# 建表
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS messages (
     id SERIAL PRIMARY KEY,
@@ -35,7 +36,6 @@ def home():
     return {"message": "API running (PostgreSQL)"}
 
 
-# 取得留言
 @app.get("/messages")
 def get_messages():
     cursor.execute("""
@@ -57,7 +57,6 @@ def get_messages():
     ]
 
 
-# 新增留言
 @app.post("/messages")
 async def add_message(request: Request):
     data = await request.json()
